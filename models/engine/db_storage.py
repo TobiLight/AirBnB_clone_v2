@@ -4,6 +4,13 @@ from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.orm import scoped_session
 from models.base_model import Base
 import os
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
 """This module defines a class to manage DB storage for hbnb clone"""
 
 
@@ -22,18 +29,12 @@ class DBStorage:
         engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, pswd, host, db), pool_pre_ping=True)
         self.__engine = engine
+        
         if os.getenv('HBNB_ENV') == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-
         dictionary = {}
         all_classes = [Amenity, City, Place, Review, State, User]
         if cls is None:
@@ -73,4 +74,3 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
-        
