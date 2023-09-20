@@ -2,7 +2,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.orm import scoped_session
-from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import Base
 import os
 """This module defines a class to manage DB storage for hbnb clone"""
@@ -24,7 +23,7 @@ class DBStorage:
             user, pswd, host, db), pool_pre_ping=True)
         self.__engine = engine
         if os.getenv('HBNB_ENV') == "test":
-            Base.metadata.drop_all(engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
@@ -74,3 +73,4 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+        
