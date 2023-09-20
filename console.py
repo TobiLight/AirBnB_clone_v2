@@ -142,7 +142,6 @@ class HBNBCommand(cmd.Cmd):
                             v = eval(v)
                         except (SyntaxError, NameError):
                             continue
-                        # print(v)
                         if type(v) == str and "_" in v:
                             kwargs[k] = v.replace("_", " ")
                         else:
