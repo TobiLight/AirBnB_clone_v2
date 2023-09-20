@@ -19,12 +19,14 @@ class DBStorage:
         pswd = os.getenv('HBNB_MYSQL_PWD')
         host = os.getenv('HBNB_MYSQL_HOST')
         db = os.getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine('mysql+mysqldb//{}:{}@{}/{}'.format(
+        
+        engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, pswd, host, db), pool_pre_ping=True)
+        self.__engine = engine
         if os.getenv('HBNB_ENV') == "test":
-            Base.metadata.drop_all(self.__engine)
-            
-    def all(self, cls):
+            Base.metadata.drop_all(engine)
+
+    def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         from models.amenity import Amenity
         from models.city import City
@@ -32,8 +34,8 @@ class DBStorage:
         from models.review import Review
         from models.state import State
         from models.user import User
-        
-        dictionary = {}       
+
+        dictionary = {}
         all_classes = [Amenity, City, Place, Review, State, User]
         if cls is None:
             for clsx in all_classes:
@@ -48,25 +50,26 @@ class DBStorage:
             for item in q:
                 key = "{}.{}".format(type(item).__name__, item.id)
                 dictionary[key] = item
-                
+
         return dictionary
-    
+
     def new(self, obj):
         """Adds the object to the current database session"""
-        self.__session.add(obj)
-        
+        if obj is not None:
+            self.__session.add(obj)
+
     def save(self):
         """Commits all changes of the current database session"""
         self.__session.commit()
-        
+
     def delete(self, obj=None):
         """Deletes from the current database session"""
         if obj is not None:
             self.__session.delete(obj)
-            
+
     def reload(self):
         """Loads storage dictionary from DB"""
-        Base.metadata.create_all(self.__engine)
+        Base.metadata.create_all(bind=self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
