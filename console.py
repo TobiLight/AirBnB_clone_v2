@@ -142,7 +142,11 @@ class HBNBCommand(cmd.Cmd):
                             v = eval(v)
                         except (SyntaxError, NameError):
                             continue
-                        kwargs[k] = v.replace("_", " ")
+                        # print(v)
+                        if type(v) == str and "_" in v:
+                            kwargs[k] = v.replace("_", " ")
+                        else:
+                            kwargs[k] = v
                 
                 if kwargs == {}:
                     new_instance = HBNBCommand.classes[args.split(" ")[0]]()
