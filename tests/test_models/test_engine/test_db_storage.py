@@ -14,6 +14,7 @@ from models.user import User
 )
 class test_DB_Storage(unittest.TestCase):
     """testing"""
+
     def test_new_and_save(self):
         '''testing  the new and save methods'''
         db = MySQLdb.connect(user=os.getenv('HBNB_MYSQL_USER'),
