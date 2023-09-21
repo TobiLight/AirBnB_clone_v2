@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Test doc """
+import os
 from tests.test_models.test_base_model import test_basemodel
 from models.review import Review
 
@@ -8,22 +9,28 @@ class test_review(test_basemodel):
     """Test doc """
 
     def __init__(self, *args, **kwargs):
-        """Test doc """
+        """ review class init"""
         super().__init__(*args, **kwargs)
         self.name = "Review"
         self.value = Review
 
     def test_place_id(self):
-        """Test doc """
+        """ testing review place_id attr"""
         new = self.value()
-        self.assertEqual(type(new.place_id), str)
+        self.assertEqual(type(new.place_id), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))
 
     def test_user_id(self):
-        """Test doc """
+        """ testing review user_id attr"""
         new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertEqual(type(new.user_id), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))
 
     def test_text(self):
-        """Test doc """
+        """ testing review text attr"""
         new = self.value()
-        self.assertEqual(type(new.text), str)
+        self.assertEqual(type(new.text), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))
