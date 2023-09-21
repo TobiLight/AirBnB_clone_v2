@@ -150,10 +150,9 @@ class HBNBCommand(cmd.Cmd):
                 if kwargs == {}:
                     new_instance = HBNBCommand.classes[args.split(" ")[0]]()
                 else:
-                    # instance = HBNBCommand.classes[args.split(" ")[0]]().to_dict()
-                    # for k, v in kwargs.items():
-                    #     instance[k] = v
-                    new_instance = HBNBCommand.classes[args.split(" ")[0]](**kwargs)
+                    
+                    new_instance = HBNBCommand.classes[args.split(" ")[0]]\
+                        (**kwargs)
                 storage.new(new_instance);
                 print(new_instance.id)
                 storage.save()
