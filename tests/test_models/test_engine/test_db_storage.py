@@ -10,8 +10,8 @@ import unittest
     "Test is not relevant for DBStorage"
 )
 class test_DB_Storage(unittest.TestCase):
-    """document document"""
+    """testing"""
 
     def test_documentation(self):
-        """document document"""
+        """test document"""
         self.assertIsNot(DBStorage.__doc__, None)
