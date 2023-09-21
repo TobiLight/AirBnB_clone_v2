@@ -19,16 +19,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+        'BaseModel': BaseModel, 'User': User, 'Place': Place,
+        'State': State, 'City': City, 'Amenity': Amenity,
+        'Review': Review
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+        'number_rooms': int, 'number_bathrooms': int,
+        'max_guest': int, 'price_by_night': int,
+        'latitude': float, 'longitude': float
+    }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -123,7 +123,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 import re
-                
                 kwargs = {}
                 pattern = r'(\w+)=(\[[^\]]*\]|\S+)'
                 matches = re.findall(pattern, args)
@@ -134,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                         val = eval(val)
                     result.append((key, val))
 
-                for k,v in result:
+                for k, v in result:
                     if type(v) == list:
                         kwargs[k] = v
                     else:
@@ -146,14 +145,14 @@ class HBNBCommand(cmd.Cmd):
                             kwargs[k] = v.replace("_", " ")
                         else:
                             kwargs[k] = v
-                
+
                 if kwargs == {}:
                     new_instance = HBNBCommand.classes[args.split(" ")[0]]()
                 else:
-                    
-                    new_instance = HBNBCommand.classes[args.split(" ")[0]]\
-                        (**kwargs)
-                storage.new(new_instance);
+
+                    new_instance = HBNBCommand.classes[args.split(" ")[
+                        0]](**kwargs)
+                storage.new(new_instance)
                 print(new_instance.id)
                 storage.save()
 
@@ -218,7 +217,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -349,6 +348,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
