@@ -20,6 +20,7 @@ sudo echo "<html>
         This is a test page for web_static deployment.
     </body>
 </html>" | sudo tee /data/web_static/releases/test/index.html
+
 # Create or recreate the symbolic link
 link="/data/web_static/current"
 if [ -L "$link" ]; then
