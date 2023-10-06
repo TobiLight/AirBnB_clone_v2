@@ -2,7 +2,7 @@
 # File: 2-do_deploy_web_static.py
 # Author: Oluwatobiloba Light
 """Fabric script to distribute an archive to your web servers"""
-from fabric.api import run, put, env
+from fabric.api import *
 import os
 
 
