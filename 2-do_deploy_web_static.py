@@ -34,7 +34,7 @@ def do_deploy(archive_path):
             format(remote_path, filename, archive_name))
 
         # Delete the archive from the web server
-        run('sudo rm {}{}.tgz'.format(remote_path, archive_name))
+        run('sudo rm /tmp/{}.tgz'.format(archive_name))
 
         # Move contents into the host web_static
         run('sudo mv /data/web_static/releases/{}/web_static/* \
@@ -42,7 +42,8 @@ def do_deploy(archive_path):
                                                   archive_name))
 
         # Delete web_static compressed directory & files
-        run('sudo rm -rf /data/web_static/releases/{}/web_static')
+        run('sudo rm -rf /data/web_static/releases/{}/web_static'.\
+            format(archive_name))
 
         # Delete the symbolic link from the web server
         run('sudo rm -rf /data/web_static/current')
