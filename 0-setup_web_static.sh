@@ -22,7 +22,7 @@ sudo echo "<html>
 
 # Create or recreate the symbolic link
 link="/data/web_static/current"
-sudo rm "$link"
+sudo rm -rf "$link"
 sudo ln -s "/data/web_static/releases/test/" "$link"
 
 # Give ownership of the /data/ directory to the ubuntu user and group
