@@ -23,7 +23,7 @@ def do_deploy(archive_path):
         archive_name = os.path.basename(archive_path.split("/")[-1].
                                         split('.')[0])
         remote_path = "/tmp/{}".format(archive_name)
-        put(archive_name, remote_path)
+        put(archive_path, remote_path)
 
         # Create a new folder for the archive
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(
