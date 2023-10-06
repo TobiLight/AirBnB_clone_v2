@@ -6,7 +6,7 @@ from fabric.api import *
 import os
 
 
-env.hosts = ['204.236.240.195', '52.91.123.82']
+env.hosts = ['204.236.240.195', '34.239.253.9']
 env.user = 'ubuntu'
 
 
@@ -31,7 +31,7 @@ def do_deploy(archive_path):
             archive_name))
 
         # Uncompress the archive to the new version directory
-        run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}'.
+        run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.
             format(filename, archive_name))
 
         # Delete the archive from the web server
