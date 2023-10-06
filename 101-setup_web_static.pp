@@ -1,5 +1,6 @@
 # Sets up web servers for the deployment of web_static
 
+
 $nginx_server_config="server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -82,7 +83,7 @@ file { '/var/www/html/404.html':
 
 file { '/etc/nginx/sites-available/default':
   ensure  => 'present',
-  content => $nginx_server_conf
+  content => $nginx_server_config
 } ->
 
 exec { 'nginx restart':
