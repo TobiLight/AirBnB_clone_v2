@@ -72,7 +72,8 @@ def do_deploy(archive_path):
                                                     archive_name))
 
         # Delete web_static compressed directory & files
-        run('sudo rm -rf /data/web_static/releases/{}/web_static')
+        run('sudo rm -rf /data/web_static/releases/{}/web_static'.\
+            format(archive_name))
 
         # Delete the symbolic link from the web server
         run('sudo rm -rf /data/web_static/current')
