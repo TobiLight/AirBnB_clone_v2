@@ -35,7 +35,7 @@ echo "
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $hostname;
+    add_header X-Served-By $HOSTNAME;
     root   /var/www/html;
     index  index.html index.htm;
 
