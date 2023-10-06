@@ -26,7 +26,7 @@ def do_deploy(archive_path):
 
         # Create a new folder for the archive
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(
-            archive_name.split('.')[0]))
+            archive_name))
 
         # Uncompress the archive to the new version directory
         run('sudo tar -xzf {} -C /data/web_static/releases/{}/'.
