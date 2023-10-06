@@ -6,7 +6,7 @@ from fabric.api import *
 import os
 
 
-env.hosts = ['204.236.240.195', '52.91.123.82	']
+env.hosts = ['204.236.240.195', '52.91.123.82']
 env.user = 'ubuntu'
 
 
@@ -14,16 +14,15 @@ def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
     """
-    if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
-            is False:
-        return False
-
     try:
+        if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
+            is False:
+            return False
         # Upload the archive to /tmp/ directory on the web server
+        put(archive_path, '/tmp/')
+        remote_path = "/tmp/"
         archive_name = os.path.basename(archive_path.split("/")[-1].
                                         split('.')[0])
-        remote_path = "/tmp/"
-        put(archive_path, remote_path)
 
         # Create a new folder for the archive
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(
