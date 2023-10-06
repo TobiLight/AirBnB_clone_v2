@@ -21,7 +21,7 @@ def do_deploy(archive_path):
 
         # Upload the archive to /tmp/ directory on the web server
         filename = os.path.basename(archive_path.split("/")[-1])
-        remote_path = "/tmp/"
+        # remote_path = "/tmp/"
         archive_name = os.path.basename(filename.split('.')[0])
         # put(archive_path, remote_path)
         put(archive_path, "/tmp/{}".format(filename))
