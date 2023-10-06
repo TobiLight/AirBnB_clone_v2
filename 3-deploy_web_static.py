@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 
 
-env.hosts = ['204.236.240.195', '52.91.123.82	']
+env.hosts = ['204.236.240.195', '52.91.123.82']
 env.user = 'ubuntu'
 
 
@@ -45,10 +45,15 @@ def do_deploy(archive_path):
 
     try:
         # Upload the archive to /tmp/ directory on the web server
+        if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
+                is False:
+                return False
+        # Upload the archive to /tmp/ directory on the web server
+        put(archive_path, '/tmp/')
+        filename = os.path.basename(archive_path.split("/")[-1])
+        remote_path = "/tmp/"
         archive_name = os.path.basename(archive_path.split("/")[-1].
                                         split('.')[0])
-        remote_path = "/tmp/"
-        put(archive_path, remote_path)
 
         # Create a new folder for the archive
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(
@@ -56,15 +61,15 @@ def do_deploy(archive_path):
 
         # Uncompress the archive to the new version directory
         run('sudo tar -xzf {}{} -C /data/web_static/releases/{}/'.
-            format(remote_path, archive_name, archive_name))
+            format(remote_path, filename, archive_name))
 
         # Delete the archive from the web server
-        run('sudo rm -rf {}{}'.format(remote_path, archive_name))
+        run('sudo rm {}{}.tgz'.format(remote_path, archive_name))
 
         # Move contents into the host web_static
         run('sudo mv /data/web_static/releases/{}/web_static/* \
             /data/web_static/releases/{}/'.format(archive_name,
-                                                  archive_name))
+                                                    archive_name))
 
         # Delete web_static compressed directory & files
         run('sudo rm -rf /data/web_static/releases/{}/web_static')
@@ -83,8 +88,8 @@ def do_deploy(archive_path):
 
 def deploy():
     """Creates and distributes an archive to your web servers"""
-    file = do_pack()
-    if file is None:
+    file_archive = do_pack()
+    if file_archive is None:
         return False
-    file = do_deploy(file)
-    return file
+    file_archive = do_deploy(file_archive)
+    return file_archive
