@@ -20,6 +20,7 @@ def do_deploy(archive_path):
             return False
         # Upload the archive to /tmp/ directory on the web server
         put(archive_path, '/tmp/')
+        filename = os.path.basename(archive_path.split("/")[-1])
         remote_path = "/tmp/"
         archive_name = os.path.basename(archive_path.split("/")[-1].
                                         split('.')[0])
@@ -30,7 +31,7 @@ def do_deploy(archive_path):
 
         # Uncompress the archive to the new version directory
         run('sudo tar -xzf {}{} -C /data/web_static/releases/{}/'.
-            format(remote_path, archive_name, archive_name))
+            format(remote_path, filename, archive_name))
 
         # Delete the archive from the web server
         run('sudo rm -rf {}{}'.format(remote_path, archive_name))
