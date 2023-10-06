@@ -22,9 +22,6 @@ sudo echo "<html>
 
 # Create or recreate the symbolic link
 link="/data/web_static/current"
-# if [ -L "$link" ]; then
-#     sudo rm "$link"
-# fi
 sudo rm "$link"
 sudo ln -s "/data/web_static/releases/test/" "$link"
 
@@ -32,40 +29,15 @@ sudo ln -s "/data/web_static/releases/test/" "$link"
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration to serve the content
-nginx_config="/etc/nginx/sites-available/default"
-# if [ -f "$nginx_config" ]; then
-#     # Configure Nginx to serve the content using an alias
-#     echo "
-# server {
-#     listen 80 default_server;
-#     listen [::]:80 default_server;
-#     add_header X-Served-By $HOSTNAME;
-#     root   /var/www/html;
-#     index  index.html index.htm index.nginx-debian.html;
+nginx_config="/etc/nginx/sites-enabled/default"
 
-#     location /hbnb_static {
-#         alias /data/web_static/current;
-#         index index.html index.htm;
-#     }
-
-#     location /redirect_me {
-#         return 301 https://x.com/0xTobii;
-#     }
-
-#     error_page 404 /404.html;
-#     location /404 {
-#       root /var/www/html;
-#       internal;
-#     }
-# }
-# " | sudo tee "$nginx_config"
 echo "
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $HOSTNAME;
+    add_header X-Served-By $hostname;
     root   /var/www/html;
-    index  index.html index.htm index.nginx-debian.html;
+    index  index.html index.htm;
 
     location /hbnb_static {
         alias /data/web_static/current;
@@ -83,7 +55,4 @@ server {
     }
 }
 " | sudo tee "$nginx_config"
-#     # Restart Nginx to apply the configuration changes
-#     sudo service nginx restart
-# fi
 sudo service nginx restart
