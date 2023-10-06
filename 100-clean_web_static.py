@@ -23,7 +23,7 @@ def do_clean(number=0):
         number = 1
     else:
         number = int(number)
-    
+
     archives = sorted(os.listdir("versions"))
     for i in range(number):
         archives.pop()
