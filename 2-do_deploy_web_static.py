@@ -16,25 +16,26 @@ def do_deploy(archive_path):
     """
     try:
         if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
-            is False:
+                is False:
             return False
+
         # Upload the archive to /tmp/ directory on the web server
-        put(archive_path, '/tmp/')
         filename = os.path.basename(archive_path.split("/")[-1])
         remote_path = "/tmp/"
-        archive_name = os.path.basename(archive_path.split("/")[-1].
-                                        split('.')[0])
+        archive_name = os.path.basename(filename.split('.')[0])
+        # put(archive_path, remote_path)
+        put(archive_path, "/tmp/{}".format(filename))
 
         # Create a new folder for the archive
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(
             archive_name))
 
         # Uncompress the archive to the new version directory
-        run('sudo tar -xzf {}{} -C /data/web_static/releases/{}/'.
-            format(remote_path, filename, archive_name))
+        run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.
+            format(filename, archive_name))
 
         # Delete the archive from the web server
-        run('sudo rm /tmp/{}.tgz'.format(archive_name))
+        run('sudo rm /tmp/{}'.format(filename))
 
         # Move contents into the host web_static
         run('sudo mv /data/web_static/releases/{}/web_static/* \
@@ -42,7 +43,7 @@ def do_deploy(archive_path):
                                                   archive_name))
 
         # Delete web_static compressed directory & files
-        run('sudo rm -rf /data/web_static/releases/{}/web_static'.\
+        run('sudo rm -rf /data/web_static/releases/{}/web_static'.
             format(archive_name))
 
         # Delete the symbolic link from the web server
