@@ -41,7 +41,7 @@ server {
     listen [::]:80 default_server;
     add_header X-Served-By $HOSTNAME;
     root   /var/www/html;
-    index  index.html index.htm;
+    index  index.html index.htm index.nginx-debian.html;
 
     location /hbnb_static {
         alias /data/web_static/current;
@@ -49,7 +49,7 @@ server {
     }
 
     location /redirect_me {
-        return 301 http://cuberule.com/;
+        return 301 https://x.com/0xTobii;
     }
 
     error_page 404 /404.html;
@@ -58,7 +58,7 @@ server {
       internal;
     }
 }
-" | sudo tee "$nginx_config" > /dev/null
+" | sudo tee "$nginx_config"
 
     # Restart Nginx to apply the configuration changes
     sudo service nginx restart
