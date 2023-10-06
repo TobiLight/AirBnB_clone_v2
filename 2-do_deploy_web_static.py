@@ -14,7 +14,7 @@ def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
     """
-    if os.path.exists(archive_path):
+    if not os.path.exists(archive_path):
         return False
 
     try:
