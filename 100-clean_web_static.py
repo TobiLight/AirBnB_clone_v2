@@ -19,6 +19,11 @@ def do_clean(number=0):
     If number is 0 or 1, it keeps only the most recent archive. If
     number is 2, it keeps the most and second-most recent archives.
     """
+    if int(number) == 0:
+        number = 1
+    else:
+        number = int(number)
+    
     archives = sorted(os.listdir("versions"))
     for i in range(number):
         archives.pop()
