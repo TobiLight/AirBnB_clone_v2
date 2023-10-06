@@ -30,11 +30,11 @@ def do_deploy(archive_path):
             archive_name))
 
         # Uncompress the archive to the new version directory
-        run('sudo tar -xzf {}/{} -C /data/web_static/releases/{}/'.
+        run('sudo tar -xzf {}{} -C /data/web_static/releases/{}/'.
             format(remote_path, archive_name, archive_name))
 
         # Delete the archive from the web server
-        run('sudo rm -rf {}/{}'.format(remote_path, archive_name))
+        run('sudo rm -rf {}{}'.format(remote_path, archive_name))
 
         # Move contents into the host web_static
         run('sudo mv /data/web_static/releases/{}/web_static/* \
