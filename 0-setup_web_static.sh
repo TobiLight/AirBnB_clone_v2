@@ -39,6 +39,8 @@ server {
     root   /var/www/html;
     index  index.html index.htm;
 
+    server_name _;
+
     location /hbnb_static {
         alias /data/web_static/current;
         index index.html index.htm;
