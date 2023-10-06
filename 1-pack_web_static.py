@@ -9,7 +9,7 @@ import os
 
 def do_pack():
     """
-    Archive the contents of the web_static folder into a .tgz file.
+    Archive the contents of the web_static folder into a .tgz archive.
     """
     dt = datetime.utcnow()
     filename = "{}{}{}{}{}{}.tgz".format(
@@ -20,13 +20,13 @@ def do_pack():
             local('mkdir -p versions')
 
         # Create the archive
-        file = local(
+        archive = local(
             'tar -czvf versions/web_static_{} web_static'.format(filename))
 
         # Check if the archive creation failed
-        if file.failed:
+        if archive.failed:
             return None
-        return file
+        return archive
 
     except Exception as e:
         return None
@@ -35,7 +35,7 @@ def do_pack():
     #     versions = local('mkdir -p versions')
     #     if versions.failed is True:
     #         return None
-    # file = local('tar -czvf versions/web_static_{}'.format(filename))
-    # if file.failed is True:
+    # archive = local('tar -czvf versions/web_static_{}'.format(filename))
+    # if archive.failed is True:
     #     return None
-    # return file
+    # return archive
