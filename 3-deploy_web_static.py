@@ -2,21 +2,20 @@
 # File: 3-deploy_web_static.py
 # Author: Oluwatobiloba Light
 """Fabric script that creates and distributes an archive to your web servers"""
-from fabric.api import *
+from fabric.api import run, put, run, env, local
 from datetime import datetime
 import os
 
 
-env.hosts = ['204.236.240.195', '52.91.123.82']
-env.user = 'ubuntu'
+env.hosts = ['204.236.240.195', '34.239.253.9']
 
 
 def do_pack():
     """
-    Archive the contents of the web_static folder into a .tgz file.
+    Archive the contents of the web_static folder into a .tgz archive.
     """
     dt = datetime.utcnow()
-    filename = "{}{}{}{}{}{}.tgz".format(
+    filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(
         dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
     try:
         # Check if 'versions' directory exists; create it if not
@@ -24,14 +23,12 @@ def do_pack():
             local('mkdir -p versions')
 
         # Create the archive
-        file = local(
-            'tar -czvf versions/web_static_{} web_static'.format(filename))
-
+        archive = local(
+            'tar -czvf {} web_static'.format(filename))
         # Check if the archive creation failed
-        if file.failed:
+        if archive.failed is True:
             return None
-        return file
-
+        return filename
     except Exception as e:
         return None
 
@@ -40,86 +37,47 @@ def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
     """
-    if not os.path.exists(archive_path):
-        return False
+    try:
+        if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
+                is False:
+            return False
 
-    # try:
-    #     if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
-    #             is False:
-    #         return False
+        # Upload the archive to /tmp/ directory on the web server
+        filename = os.path.basename(archive_path.split("/")[-1])
+        archive_name = os.path.basename(filename.split('.')[0])
+        dir_path = "/data/web_static/releases/"
 
-    #     # Upload the archive to /tmp/ directory on the web server
-    #     filename = os.path.basename(archive_path.split("/")[-1])
-    #     # remote_path = "/tmp/"
-    #     archive_name = os.path.basename(filename.split('.')[0])
-    #     # put(archive_path, remote_path)
-    #     put(archive_path, "/tmp/{}".format(filename))
+        # Upload file to remote server
+        put(archive_path, "/tmp/")
 
-    #     # Create a new folder for the archive
-    #     run('sudo mkdir -p /data/web_static/releases/{}/'.format(
-    #         archive_name))
-
-    #     # Uncompress the archive to the new version directory
-    #     run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.
-    #         format(filename, archive_name))
-
-    #     # Delete the archive from the web server
-    #     run('sudo rm /tmp/{}'.format(filename))
-
-    #     # Move contents into the host web_static
-    #     run('sudo mv /data/web_static/releases/{}/web_static/* \
-    #         /data/web_static/releases/{}/'.format(archive_name,
-    #                                               archive_name))
-
-    #     # Delete web_static compressed directory & files
-    #     run('sudo rm -rf /data/web_static/releases/{}/web_static'.
-    #         format(archive_name))
-
-    #     # Delete the symbolic link from the web server
-    #     run('sudo rm -rf /data/web_static/current')
-
-    #     # Create a new symbolic link
-    #     run('sudo ln -s /data/web_static/releases/{}/ \
-    #         /data/web_static/current'.format(archive_name))
-    # except:
-    #     return False
-
-    # return True
-    filename = os.path.basename(archive_path.split("/")[-1])
-    remote_path = "/tmp/"
-    archive_name = os.path.basename(filename.split('.')[0])
-    if put(archive_path, "/tmp/{}".format(filename)).failed is True:
+        run("sudo rm -rf {}{}/".format(dir_path, archive_name))
+        # Create a new folder for the archive
+        run('sudo mkdir -p {}{}/'.format(dir_path, archive_name))
+        # Uncompress the archive to the new version directory
+        run('sudo tar -xzf /tmp/{} -C {}{}/'.
+            format(filename, dir_path, archive_name))
+        # Delete the archive from the web server
+        run('sudo rm /tmp/{}'.format(filename))
+        # Move contents into the host web_static
+        run('sudo mv {0}{1}/web_static/* {0}{1}/'.
+            format(dir_path, archive_name))
+        # Delete web_static compressed directory & files
+        run('sudo rm -rf {}{}/web_static'.format(dir_path, archive_name))
+        # Delete the symbolic link from the web server
+        run('sudo rm -rf /data/web_static/current')
+        # # Create a new symbolic link
+        run('sudo ln -sf {}{}/ \
+            /data/web_static/current'.format(dir_path, archive_name))
+        # print("New version deployed!")
+        return True
+    except Exception:
         return False
-    if run("rm -rf /data/web_static/releases/{}/".
-           format(archive_name)).failed is True:
-        return False
-    if run("mkdir -p /data/web_static/releases/{}/".
-           format(archive_name)).failed is True:
-        return False
-    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
-           format(filename, archive_name)).failed is True:
-        return False
-    if run("rm /tmp/{}".format(filename)).failed is True:
-        return False
-    if run("mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/".format(archive_name, archive_name))\
-            .failed is True:
-        return False
-    if run("rm -rf /data/web_static/releases/{}/web_static".
-           format(archive_name)).failed is True:
-        return False
-    if run("rm -rf /data/web_static/current").failed is True:
-        return False
-    if run("ln -s /data/web_static/releases/{}/ /data/web_static/current".
-           format(archive_name)).failed is True:
-        return False
-    return True
 
 
 def deploy():
     """Creates and distributes an archive to your web servers"""
     file_archive = do_pack()
+    print(file_archive)
     if file_archive is None:
         return False
-    file_archive = do_deploy(file_archive)
-    return file_archive
+    return do_deploy(file_archive)
