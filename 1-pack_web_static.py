@@ -12,7 +12,7 @@ def do_pack():
     Archive the contents of the web_static folder into a .tgz archive.
     """
     dt = datetime.utcnow()
-    filename = "{}{}{}{}{}{}.tgz".format(
+    filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(
         dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
     try:
         # Check if 'versions' directory exists; create it if not
@@ -21,12 +21,12 @@ def do_pack():
 
         # Create the archive
         archive = local(
-            'tar -czvf versions/web_static_{} web_static'.format(filename))
+            'tar -czvf {} web_static'.format(filename))
 
         # Check if the archive creation failed
-        if archive.failed:
+        if archive.failed is True:
             return None
-        return archive
+        return filename
 
     except Exception as e:
         return None
