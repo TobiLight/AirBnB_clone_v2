@@ -10,6 +10,7 @@ import os
 env.hosts = ['204.236.240.195', '34.239.253.9']
 
 
+@runs_once
 def do_pack():
     """
     Archive the contents of the web_static folder into a .tgz archive.
@@ -73,7 +74,7 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
-@runs_once
+
 def deploy():
     """Creates and distributes an archive to your web servers"""
     file_archive = do_pack()
