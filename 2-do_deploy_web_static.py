@@ -17,14 +17,15 @@ def do_deploy(archive_path):
     try:
         # filename = os.path.basename(archive_path.split("/")[-1])
         # archive_name = os.path.basename(filename.split('.')[0])
-        if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
-                is False:
+        if not os.path.exists(archive_path):
             return False
 
         # Upload the archive to /tmp/ directory on the web server
         filename = os.path.basename(archive_path.split("/")[-1])
         archive_name = os.path.basename(filename.split('.')[0])
         dir_path = "/data/web_static/releases/"
+
+        # Upload file to remote server
         put(archive_path, "/tmp/")
 
         run("sudo rm -rf {}{}/".format(dir_path, archive_name))
@@ -56,24 +57,3 @@ def do_deploy(archive_path):
         return True
     except Exception:
         return False
-
-    # try:
-    #     if not os.path.exists(archive_path):
-    #         return False
-    #     fn_with_ext = os.path.basename(archive_path)
-    #     fn_no_ext, ext = os.path.splitext(fn_with_ext)
-    #     dpath = "/data/web_static/releases/"
-    #     put(archive_path, "/tmp/")
-    #     # print("New version deployed!")
-    #     run("sudo rm -rf {}{}/".format(dpath, fn_no_ext))
-    #     run("sudo mkdir -p {}{}/".format(dpath, fn_no_ext))
-    #     run("sudo tar -xzf /tmp/{} -C {}{}/".format(fn_with_ext, dpath, fn_no_ext))
-    #     run("sudo rm /tmp/{}".format(fn_with_ext))
-    #     run("sudo mv {0}{1}/web_static/* {0}{1}/".format(dpath, fn_no_ext))
-    #     run("sudo rm -rf {}{}/web_static".format(dpath, fn_no_ext))
-    #     run("sudo rm -rf /data/web_static/current")
-    #     run("sudo ln -s {}{}/ /data/web_static/current".format(dpath, fn_no_ext))
-
-    #     return True
-    # except Exception:
-    #     return False
