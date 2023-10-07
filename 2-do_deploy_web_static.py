@@ -2,13 +2,13 @@
 # File: 2-do_deploy_web_static.py
 # Author: Oluwatobiloba Light
 """Fabric script to distribute an archive to your web servers"""
-from fabric.api import run, put, run, env, task
+from fabric.api import run, put, run, env
 import os
 
 
 env.hosts = ['204.236.240.195', '34.239.253.9']
 
-@task
+
 def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
