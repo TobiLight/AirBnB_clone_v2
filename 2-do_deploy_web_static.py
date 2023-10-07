@@ -51,7 +51,7 @@ def do_deploy(archive_path):
         # # Create a new symbolic link
         run('sudo ln -sf /data/web_static/releases/{}/ \
             /data/web_static/current'.format(archive_name))
-        print("New version deployed!")
+        # print("New version deployed!")
         return True
     except Exception:
         return False
