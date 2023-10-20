@@ -6,11 +6,7 @@
 </HEAD>
 
 <BODY>
-	{% if n % 2 == 0 +%}
-		<H1>Number: {{n}} is {{type}}</H1>
-	{% else +%}
-		<H1>Number: {{n}} is {{type}}</H1>
-	{% endif %}
+	{% if n %} <H1>Number: {{n}} is {{odd_or_even}}</H1> {% endif %}
 </BODY>
 
 </HTML>
