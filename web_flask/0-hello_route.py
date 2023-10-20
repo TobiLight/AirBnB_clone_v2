@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# File: 0-hello_route.py()
+# File: 0-hello_route.py
 # Author: Oluwatobiloba Light
 """This script starts a Flask web application"""
 

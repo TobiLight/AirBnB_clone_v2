@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# File: 1-hbnb_route.py()
+# File: 1-hbnb_route.py
 # Author: Oluwatobiloba Light
 """This script starts a Flask web application"""
 
