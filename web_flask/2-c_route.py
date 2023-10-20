@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# File: 2-c_route.py()
+# File: 2-c_route.py
 # Author: Oluwatobiloba Light
 """This script starts a Flask web application"""
 
