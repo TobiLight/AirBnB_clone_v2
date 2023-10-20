@@ -6,7 +6,7 @@
 
 from flask import Flask
 app = Flask(__name__)
-# from markupsafe import escape
+from markupsafe import escape
 
 
 @app.route("/", strict_slashes=False)
@@ -25,8 +25,7 @@ def hbnb():
 def c_text(text):
     """Display “C ” followed by the value of the text variable """
     text = text.replace("_", " ")
-    print("C is {}".format(text))
-    return f"C is {text}"
+    return f"C {escape(text)}"
 
 
 if __name__ == "__main__":
