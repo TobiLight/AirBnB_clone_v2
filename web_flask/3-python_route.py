@@ -25,14 +25,23 @@ def hbnb():
 
 @app.route("/c/<path:text>", strict_slashes=False)
 def c_text(text):
-    """Display “C ” followed by the value of the text variable """
+    """
+    Args:
+        text: str - text variable
+    Display “C ” followed by the value of the text variable.
+    """
     text = text.replace("_", " ")
     return f"C {escape(text)}"
 
 
+@app.route("/python/", strict_slashes=False)
 @app.route("/python/<path:text>", strict_slashes=False)
-def python_text(text):
-    """Display “Python ” followed by the value of the text variable """
+def python_text(text="is cool"):
+    """
+    Args:
+        text: str - text variable
+    Display “Python ” followed by the value of the text variable.
+    """
     text = text.replace("_", " ")
     return f"Python {escape(text)}"
 
