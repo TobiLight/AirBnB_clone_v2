@@ -5,8 +5,10 @@
 
 
 from flask import Flask
-app = Flask(__name__)
 from markupsafe import escape
+
+
+app = Flask(__name__)
 
 
 @app.route("/", strict_slashes=False)
