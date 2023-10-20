@@ -34,7 +34,7 @@ def c_text(text):
 def python_text(text):
     """Display “Python ” followed by the value of the text variable """
     text = text.replace("_", " ")
-    return f"C {escape(text)}"
+    return f"Python {escape(text)}"
 
 
 if __name__ == "__main__":
