@@ -27,12 +27,12 @@ def hbnb():
 def c_text(text):
     """
     Display “C ” followed by the value of the text variable.
- 
-	Args:
-		text (str): _description_
 
-	Returns:
-		_type_: _description_
+        Args:
+                text (str): _description_
+
+        Returns:
+                _type_: _description_
     """
     text = text.replace("_", " ")
     return f"C {escape(text)}"
@@ -43,12 +43,12 @@ def c_text(text):
 def python_text(text="is cool"):
     """
     Display “Python ” followed by the value of the text variable.
-	
-	Args:
-		text (str, optional): _description_. Defaults to "is cool".
 
-	Returns:
-		_type_: _description_
+        Args:
+                text (str, optional): _description_. Defaults to "is cool".
+
+        Returns:
+                _type_: _description_
     """
     text = text.replace("_", " ")
     return f"Python {escape(text)}"
@@ -58,11 +58,11 @@ def python_text(text="is cool"):
 def number(n):
     """
     Display “n is a number” only if n is an integer
-    
+
     Args: n (int): A number
-    
+
     Returns:
-		_type_: _description_
+                _type_: _description_
     """
     return f"{n} is a number"
 
@@ -71,14 +71,14 @@ def number(n):
 def number_template(n):
     """
     Renders a HTML template only if n is an integer
-    
+
     Args: n (int): A number
-    
+
     Returns:
-		_type_: _description_
+                _type_: _description_
     """
     return render_template('5-number.html', n=n)
- 
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
