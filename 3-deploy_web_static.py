@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 
 
-env.hosts = ['204.236.240.195', '34.239.253.9']
+env.hosts = ['204.236.240.19', '34.239.253.91']
 
 
 @runs_once
@@ -16,6 +16,8 @@ def do_pack():
     Archive the contents of the web_static folder into a .tgz archive.
     """
     dt = datetime.utcnow()
+    # formatted_dt = datetime.now().strftime('%Y%m%d%H%M%S')
+    # print("datetime", dt, formatted_dt)
     filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(
         dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
     try:
@@ -69,7 +71,7 @@ def do_deploy(archive_path):
         # # Create a new symbolic link
         run('sudo ln -sf {}{}/ \
             /data/web_static/current'.format(dir_path, archive_name))
-        # print("New version deployed!")
+        print("New version deployed!")
         return True
     except Exception:
         return False
@@ -78,7 +80,6 @@ def do_deploy(archive_path):
 def deploy():
     """Creates and distributes an archive to your web servers"""
     file_archive = do_pack()
-    print(file_archive)
     if file_archive is None:
         return False
     return do_deploy(file_archive)
