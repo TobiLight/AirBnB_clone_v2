@@ -2,7 +2,7 @@
 # File: 3-deploy_web_static.py
 # Author: Oluwatobiloba Light
 """Fabric script that creates and distributes an archive to your web servers"""
-from fabric.api import run, put, run, env, local, runs_once
+from fabric.api import run, put, run, env, local, runs_once, task
 from datetime import datetime
 import os
 
@@ -41,6 +41,7 @@ def do_pack():
     return None
 
 
+@task
 def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
@@ -105,6 +106,7 @@ def do_deploy(archive_path):
         return False
 
 
+@task
 def deploy():
     """Creates and distributes an archive to your web servers"""
     file_archive = do_pack()
