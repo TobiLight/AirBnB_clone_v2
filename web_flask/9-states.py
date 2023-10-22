@@ -118,7 +118,7 @@ def cities_by_states():
 def state_by_id(id=None):
     """Displays a HTML Page with a state using ID"""
     has_id = True
-    if id == None:
+    if id is None:
         states = [state for key, state in storage.all(State).items()]
         has_id = False
     else:
