@@ -15,25 +15,30 @@ def do_pack():
     """
     Archive the contents of the web_static folder into a .tgz archive.
     """
-    dt = datetime.utcnow()
-    # formatted_dt = datetime.now().strftime('%Y%m%d%H%M%S')
-    # print("datetime", dt, formatted_dt)
-    filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-        dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
-    try:
-        # Check if 'versions' directory exists; create it if not
-        if not os.path.isdir('versions'):
-            local('mkdir -p versions')
+    # dt = datetime.utcnow()
+    # filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+    #     dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+    # try:
+    #     # Check if 'versions' directory exists; create it if not
+    #     if not os.path.isdir('versions'):
+    #         local('mkdir -p versions')
 
-        # Create the archive
-        archive = local(
-            'tar -czvf {} web_static'.format(filename))
-        # Check if the archive creation failed
-        if archive.failed is True:
-            return None
-        return filename
-    except Exception as e:
-        return None
+    #     # Create the archive
+    #     archive = local(
+    #         'tar -czvf {} web_static'.format(filename))
+    #     # Check if the archive creation failed
+    #     if archive.failed is True:
+    #         return None
+    #     return filename
+    # except Exception as e:
+    #     return None
+    formatted_dt = datetime.now().strftime('%Y%m%d%H%M%S')
+    mkdir = "mkdir -p versions"
+    path = "versions/web_static_{}.tgz".format(formatted_dt)
+    print("Packing web_static to {}".format(path))
+    if local("{} && tar -cvzf {} web_static".format(mkdir, path)).succeeded:
+        return path
+    return None
 
 
 def do_deploy(archive_path):
