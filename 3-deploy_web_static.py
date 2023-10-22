@@ -48,6 +48,7 @@ def do_pack():
 def do_deploy(archive_path):
     """
     Distribute an archive to web servers.
+    
     """
     try:
         if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
@@ -108,7 +109,11 @@ def do_deploy(archive_path):
 
 @task
 def deploy():
-    """Creates and distributes an archive to your web servers"""
+    """
+    Creates and distributes an archive to your web servers
+    Usage:
+    	sudo fab -f 3-deploy_web_static.py deploy -i ~/.ssh/id_rsa -u ubuntu
+    """
     file_archive = do_pack()
     if file_archive is None:
         return False
