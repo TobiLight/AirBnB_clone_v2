@@ -92,7 +92,7 @@ def do_deploy(archive_path):
         fn_no_ext, ext = os.path.splitext(fn_with_ext)
         dpath = "/data/web_static/releases/"
         put(archive_path, "/tmp/")
-        run("rm -rf {}{}/".format(dpath, fn_no_ext))
+        # run("rm -rf {}{}/".format(dpath, fn_no_ext))
         run("mkdir -p {}{}/".format(dpath, fn_no_ext))
         run("tar -xzf /tmp/{} -C {}{}/".format(fn_with_ext, dpath, fn_no_ext))
         run("rm /tmp/{}".format(fn_with_ext))
