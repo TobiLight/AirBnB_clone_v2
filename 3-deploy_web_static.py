@@ -62,23 +62,23 @@ def do_deploy(archive_path):
         # Upload file to remote server
         put(archive_path, "/tmp/")
 
-        # run("sudo rm -rf {}{}/".format(dir_path, archive_name))
+        # run("rm -rf {}{}/".format(dir_path, archive_name))
         # Create a new folder for the archive
-        run('sudo mkdir -p {}{}/'.format(dir_path, archive_name))
+        run('mkdir -p {}{}/'.format(dir_path, archive_name))
         # Uncompress the archive to the new version directory
-        run('sudo tar -xzf /tmp/{} -C {}{}/'.
+        run('tar -xzf /tmp/{} -C {}{}/'.
             format(filename, dir_path, archive_name))
         # Delete the archive from the web server
-        run('sudo rm /tmp/{}'.format(filename))
+        run('rm /tmp/{}'.format(filename))
         # Move contents into the host web_static
-        run('sudo mv {0}{1}/web_static/* {0}{1}/'.
+        run('mv {0}{1}/web_static/* {0}{1}/'.
             format(dir_path, archive_name))
         # Delete web_static compressed directory & files
-        run('sudo rm -rf {}{}/web_static'.format(dir_path, archive_name))
+        run('rm -rf {}{}/web_static'.format(dir_path, archive_name))
         # Delete the symbolic link from the web server
-        run('sudo rm -rf /data/web_static/current')
+        run('rm -rf /data/web_static/current')
         # # Create a new symbolic link
-        run('sudo ln -s {}{}/ \
+        run('ln -s {}{}/ \
             /data/web_static/current'.format(dir_path, archive_name))
         print("New version deployed!")
         return True
