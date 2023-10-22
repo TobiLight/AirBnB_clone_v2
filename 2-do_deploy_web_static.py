@@ -14,7 +14,8 @@ def do_deploy(archive_path):
     Distribute an archive to web servers.
     """
     try:
-        if not os.path.exists(archive_path):
+        if not os.path.exists(archive_path) or os.path.isfile(archive_path) \
+                is False:
             return False
 
         # Upload the archive to /tmp/ directory on the web server
@@ -43,7 +44,7 @@ def do_deploy(archive_path):
         # # Create a new symbolic link
         run('sudo ln -sf {}{}/ \
             /data/web_static/current'.format(dir_path, archive_name))
-        # print("New version deployed!")
+        print("New version deployed!")
         return True
     except Exception:
         return False

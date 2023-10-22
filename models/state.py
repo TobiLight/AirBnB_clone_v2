@@ -10,6 +10,7 @@ from models.city import City
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
+    name = ""
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         name = Column(String(128), nullable=False)
         cities = relationship("City", cascade='all, delete, delete-orphan',
