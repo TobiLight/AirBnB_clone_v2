@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# File: 6-number_odd_or_even.py
+# File: 7-states_list.py
 # Author: Oluwatobiloba Light
 """This script starts a Flask web application"""
 
