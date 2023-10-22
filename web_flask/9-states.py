@@ -114,7 +114,7 @@ def cities_by_states():
 
 
 @app.route("/states", strict_slashes=False)
-@app.route("/states/<path:id>", strict_slashes=False)
+@app.route("/states/<id>", strict_slashes=False)
 def state_by_id(id=None):
     """Displays a HTML Page with a state using ID"""
     has_id = True
