@@ -26,7 +26,7 @@ def do_pack():
         print("Packing web_static to {}".format(filename))
         # Create the archive
         archive = local(
-            'tar -czvf {} web_static'.format(filename))
+            'tar -cvzf {} web_static'.format(filename))
         # Check if the archive creation failed
         if archive.failed is True:
             return None
