@@ -27,7 +27,6 @@ def do_pack():
         if archive.failed is True:
             return None
         return filename
-
     except Exception as e:
         return None
 
