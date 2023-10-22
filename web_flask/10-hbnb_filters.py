@@ -132,9 +132,11 @@ def state_by_id(id=None):
 def hbnb_filters():
     """Displays a HTML Page with states, cities and amenities"""
     states = [state for key, state in storage.all(State).items()]
-    amenities = [amenity.to_dict() for key, amenity in storage.all(Amenity).items()]
-    return render_template("10-hbnb_filters.html", states=states, amenities=amenities)
-    
+    amenities = [amenity.to_dict()
+                 for key, amenity in storage.all(Amenity).items()]
+    return render_template("10-hbnb_filters.html",
+                           states=states, amenities=amenities)
+
 
 @app.teardown_appcontext
 def teardown(error):
