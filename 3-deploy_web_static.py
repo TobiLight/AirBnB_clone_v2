@@ -93,7 +93,8 @@ def do_deploy(archive_path):
     #     put(archive_path, "/tmp/")
     #     # run("rm -rf {}{}/".format(dpath, fn_no_ext))
     #     run("mkdir -p {}{}/".format(dpath, fn_no_ext))
-    #     run("tar -xzf /tmp/{} -C {}{}/".format(fn_with_ext, dpath, fn_no_ext))
+    #     run("tar -xzf /tmp/{} -C {}{}/"
+    #         .format(fn_with_ext, dpath, fn_no_ext))
     #     run("rm /tmp/{}".format(fn_with_ext))
     #     run("mv {0}{1}/web_static/* {0}{1}/".format(dpath, fn_no_ext))
     #     run("rm -rf {}{}/web_static".format(dpath, fn_no_ext))
