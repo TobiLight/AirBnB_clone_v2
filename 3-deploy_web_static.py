@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 
 
-env.hosts = ['204.236.240.19', '34.239.253.91']
+env.hosts = ['204.236.240.195', '34.239.253.9']
 
 
 @runs_once
