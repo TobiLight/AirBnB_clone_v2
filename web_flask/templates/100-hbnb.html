@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="../static/styles/3-header.css" />
 	<link rel="stylesheet" href="../static/styles/3-footer.css" />
 	<link rel="stylesheet" href="../static/styles/6-filters.css" />
+	<link rel="stylesheet" href="../static/styles/8-places.css" />
 	<link rel="icon" href="static/images/icon.png" type="image/png">
 </head>
 
@@ -50,6 +51,47 @@
 				</ul>
 			</div>
 
+		</section>
+		<section class="places">
+			<h1>Places</h1>
+			{% for place in places|sort(attribute="name") %}
+			<article>
+				<div class="headline">
+					<h2>{{place.name}}</h2>
+					<div class="price_by_nigt">
+						<p class="price_by_night">
+							&#36;{{ place.price_by_night }}</p>
+					</div>
+				</div>
+				<div class="information">
+					<div class="max_guest">
+						<div class="guest_icon"></div>
+						{% if place.max_guest < 2 %} <p>{{place.max_guest}} Guest</p>
+							{% else %}
+							<p>{{place.max_guest}} Guests</p>
+							{% endif %}
+					</div>
+					<div class="number_rooms">
+						<div class="bed_icon"></div>
+						{% if place.number_rooms < 2 %} <p>{{place.number_rooms}} Bedroom</p>
+							{% else %}
+							<p>{{place.number_rooms}} Bedrooms</p>
+							{% endif %}
+					</div>
+					<div class="number_bathrooms">
+						<div class="bath_icon"></div>
+						{% if place.number_rooms < 2 %} <p>{{place.number_rooms}} Bathroom</p>
+							{% else %}
+							<p>{{place.number_rooms}} Bathrooms</p>
+							{% endif %}
+					</div>
+				</div>
+				<div class="user"><b>Owner</b>: John Lennon</div>
+				<div class="description">
+					{{place.description|safe}}
+				</div>
+			</article>
+			{% endfor %}
 		</section>
 	</div>
 	<footer>

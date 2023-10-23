@@ -42,10 +42,13 @@
 	border-radius: 4px;
 	overflow-y: scroll;
 	max-height: 300px;
+	position: relative;
+	z-index: 999;
 }
 
 .locations:hover .popover {
 	display: inline-block;
+	z-index: 999;
 }
 
 .amenities:hover .popover {
@@ -57,9 +60,6 @@ ul {
 	padding: 0px;
 	padding-bottom: 20px;
 }
-
-li {
-}	
 
 h2 {
 	font-size: 16px;
