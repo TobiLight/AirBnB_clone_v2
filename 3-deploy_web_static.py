@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # File: 3-deploy_web_static.py
 # Author: Oluwatobiloba Light
-"""Fabric script that creates and distributes an archive to your web servers"""
+"""Fabric script that creates and distributes an archive to your web
+servers"""
 from fabric.api import run, put, env, local, runs_once, task
 from datetime import datetime
 import os
