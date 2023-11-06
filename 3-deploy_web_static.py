@@ -11,8 +11,6 @@ import os
 env.hosts = ['204.236.240.195', '34.239.253.9']
 
 
-
-
 @runs_once
 def do_pack():
     """ method doc
